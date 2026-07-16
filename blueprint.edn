@@ -1,0 +1,13 @@
+[{:itonami.blueprint/id "cloud-itonami-isic-4721"
+  :itonami.blueprint/name "Retail Sale of Food in Specialized Stores"
+  :itonami.blueprint/isic-rev4 "4721"
+  :itonami.blueprint/domain :retail/specialized-food-stores
+  :itonami.blueprint/license "AGPL-3.0-or-later"
+  :itonami.blueprint/social-impact [:food-safety :allergen-protection :food-access :local-economy]
+  :itonami.blueprint/governor :food-retail-governor
+  :itonami.blueprint/robotics true
+  :itonami.blueprint/required-technologies [:robotics :identity :forms :dmn :bpmn :audit-ledger :retail]
+  :itonami.blueprint/optional-technologies []
+  :itonami.blueprint/status :public-oss
+  :itonami.blueprint/maturity :implemented
+  :db/id -1}]
