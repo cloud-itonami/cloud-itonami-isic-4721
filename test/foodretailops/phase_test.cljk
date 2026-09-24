@@ -1,6 +1,6 @@
 (ns foodretailops.phase-test
   "Unit tests of `foodretailops.phase` rollout logic."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [foodretailops.phase :as phase]))
 
 (deftest phase-0-read-only
