@@ -1,0 +1,33 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:dev:physics` runs it.
+;;
+;; README: a coordination actor for specialized food stores (butchers,
+;; bakeries, fishmongers, greengrocers; ISIC 4721); in-store physical work
+;; is done by robots under kotoba-lang/robotics. The physical work: baking
+;; loaves in the deck oven until the crumb centre is done, and an arm
+;; sliding loaded baking trays into the oven.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isic-4721"
+ :cases
+ [{:id :bake-loaf-to-core
+   :kind :thermal
+   :procedure "loaves bake in a 220 C deck oven until the crumb centre reaches 95 C (half-thickness swept; the back face is the loaf's centre plane)"
+   :params {:conductivity-w-mk 0.30 :density-kg-m3 450.0 :specific-heat-j-kgk 2800.0
+            :t0-c 25.0 :t-hot-c 220.0 :h-front-w-m2k 20.0 :t-back-ambient-c 25.0 :h-back-w-m2k 0.0
+            :threshold-c 95.0 :duration-s 10800.0 :nodes 11}
+   :sweep {:param :thickness-m :values [0.030 0.040 0.050 0.060 0.070]}
+   :quantity :time-to-threshold-s
+   :limit {:max 2700.0 :basis "estimate: a 45-minute oven slot in the bakery's morning bake plan; evaporation and crust formation are not modelled"}
+   :boundary {:lo 0.015 :hi 0.08}}
+  {:id :load-tray-into-oven
+   :kind :manipulator
+   :procedure "bakery arm slides a loaded baking tray from the rack trolley onto the deck-oven sole"
+   :params {:l1-m 0.50 :l2-m 0.45 :m1-kg 5.0 :m2-kg 3.5
+            :from [0.40 0.30] :to [0.85 0.40] :duration-s 2.0 :steps 400}
+   :sweep {:param :payload-kg :values [2.0 4.0 6.0 8.0 10.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 90.0 :basis "estimate: continuous shoulder torque of a ~6 kg-payload arm"}
+   :boundary {:lo 0.5 :hi 40.0}}]}
